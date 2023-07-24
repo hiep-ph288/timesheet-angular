@@ -1,6 +1,6 @@
 # Timesheet
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.5.
+<img width="1778" alt="Screenshot 2023-07-24 at 23 11 46" src="https://github.com/hiep-ph288/timesheet-angular/assets/75383405/d0988212-c1ee-42d5-ad3f-3a86255e87b3">
 
 ## Development server
 
