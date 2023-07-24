@@ -1,0 +1,104 @@
+<div class="flex flex-col gap-3 px-5 py-3">
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <div class="flex flex-row items-start">
+      <h1 class="w-[20%] text-md font-bold">Client</h1>
+      <div class="w-full flex items-start gap-6">
+        <mat-form-field class="w-[60%]" appearance="outline">
+          <mat-label>Choose a client </mat-label>
+          <mat-select formControlName="customerId">
+            <mat-option
+              *ngFor="let customer of customer | async"
+              [value]="customer.id"
+              >{{ customer.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <app-button (click)="openDialog()" [title]="'New Client'"></app-button>
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <h1 class="w-[20%] text-md font-bold">Project Name</h1>
+      <div class="w-full">
+        <mat-form-field class="w-[60%]" appearance="outline">
+          <mat-label>Project Name</mat-label>
+          <input formControlName="name" matInput required />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="flex flex-row">
+      <h1 class="w-[20%] text-md font-bold">Project Code</h1>
+      <div class="w-full">
+        <mat-form-field class="w-[20%]" appearance="outline">
+          <mat-label>Project Code</mat-label>
+          <input formControlName="code" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <h1 class="w-[20%] text-md font-bold">Dates</h1>
+      <div class="w-full flex flex-row items-center gap-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Start at</mat-label>
+          <input
+            formControlName="timeStart"
+            matInput
+            [matDatepicker]="picker1"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <p>to</p>
+        <mat-form-field appearance="outline">
+          <mat-label>End at</mat-label>
+          <input formControlName="timeEnd" matInput [matDatepicker]="picker2" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="flex flex-row">
+      <h1 class="w-[20%] text-md font-bold">Note</h1>
+      <div class="w-full">
+        <mat-form-field class="w-full" appearance="outline">
+          <textarea formControlName="note" matInput></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="flex flex-row">
+      <h1 class="w-[20%] text-md font-bold">All user</h1>
+      <div class="w-full">
+        <mat-checkbox
+          class="example-margin"
+          formControlName="isAllUserBelongTo"
+          color="warn"
+          >Auto add user as a member of th is project when creating new
+          user</mat-checkbox
+        >
+      </div>
+    </div>
+
+    <div class="flex flex-row">
+      <h1 class="w-[20%] text-md font-bold">Project Type</h1>
+      <div class="w-full">
+        <mat-radio-group (change)="onRadioChange($event.value)">
+          <mat-radio-button
+            *ngFor="let type of types"
+            [ngClass]="selectedType === type ? 'active' : 'notActive'"
+            disableRipple="true"
+            value="type"
+            >{{ type | protype }}</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+    </div>
+  </form>
+</div>

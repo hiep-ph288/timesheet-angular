@@ -1,0 +1,94 @@
+<div
+  *ngIf="
+    (projectsData && projectsData.length > 0) || isLoading;
+    else noProjects
+  "
+>
+  <div
+    *ngFor="let items of projectsData | groupData | keyvalue"
+  >
+    <div class="w-full h-[50px] bg-[#5555] flex items-center rounded-md px-2">
+      <h1 class="text-20 font-bold">{{ items.key }}</h1>
+    </div>
+    <div
+      class="flex flex-row justify-between items-center border-black border-2 py-2 hover:bg-slate-200"
+      *ngFor="let project of items.value"
+    >
+      <div class="flex flex-row gap-2 flex-wrap max-w-[80%]">
+        <p>{{ project.name }}</p>
+        <p
+          *ngFor="let item of project.pms"
+          class="bg-[#2e95ea] rounded-lg text-white font-semibold px-1"
+        >
+          {{ item }}
+        </p>
+        <p class="bg-[#f44336] rounded-lg text-white font-semibold px-1">
+          {{ project.activeMember }} Members
+        </p>
+        <p class="bg-[#f89c26] rounded-lg text-white font-semibold px-1">
+          {{ project.projectType | protype }}
+        </p>
+        <p class="bg-[#4caf50] rounded-lg text-white font-semibold px-1">
+          {{ project.timeStart | dateFormat
+          }}<span *ngIf="project.timeEnd">
+            - {{ project.timeEnd | dateFormat }}</span
+          >
+        </p>
+      </div>
+      <div class="flex flex-row gap-2 items-center">
+        <p
+          class="text-sm text-white px-1"
+          [ngClass]="project.status === 1 ? 'bg-gray-400' : 'bg-green-500'"
+        >
+          {{ project.status | isActive }}
+        </p>
+        <button
+          class="flex flex-row-reverse gap-2"
+          mat-raised-button
+          [matMenuTriggerFor]="menu"
+        >
+          <span>Actions</span>
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openEditPage(project.id)">
+            Edit <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            *ngIf="project.status === 0; else deactive"
+            (click)="openDialog(project.id, 1, project.name)"
+            mat-menu-item
+          >
+            <span>
+              <mat-icon>close</mat-icon>
+              Deactive
+            </span>
+          </button>
+          <ng-template #deactive>
+            <button
+              (click)="openDialog(project.id, 0, project.name)"
+              mat-menu-item
+            >
+              <span>
+                <mat-icon>close</mat-icon>
+                Active
+              </span>
+            </button>
+          </ng-template>
+          <button
+            mat-menu-item
+            (click)="openDialog(project.id, 1, project.name)"
+          >
+            <span class="text-red-600">Delete</span> <mat-icon>delete</mat-icon>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noProjects>
+  <i>Không tìm thấy kết quả phù hợp.</i>
+</ng-template>
+
+<app-loading *ngIf="isLoading"></app-loading>

@@ -1,0 +1,50 @@
+<div class="h-full w-[300px] bg-white shadow-lg">
+  <div
+    class="h-[86px] flex flex-row items-center relative"
+    style="background-image: url('../../../../assets/user-bg.jpg')"
+  >
+    <img
+      class="w-14 h-14 rounded-full m-3"
+      src="http://training-api-timesheet.nccsoft.vn/avatars/1669619917196_admin_image.jpg"
+      alt=""
+    />
+    <div class="text-10 text-white">
+      <p>admin admin</p>
+      <p>admin@aspnetboilerplate.com</p>
+    </div>
+    <mat-icon
+      #toggleLogout
+      class="absolute right-1 bottom-1 text-white"
+      (click)="handleToggleLogout()"
+      >keyboard_arrow_down</mat-icon
+    >
+    <a
+      class="absolute right-0 bottom-[-45px] p-3 flex flex-row items-center bg-gray-100 rounded-xl"
+      href="#"
+      *ngIf="isShowButtonLogout"
+      (click)="handleLogout()"
+    >
+      <mat-icon fontIcon="logout"></mat-icon>
+      <span>Logout</span>
+    </a>
+  </div>
+  <div
+    class="h-[76vh] overflow-hidden hover:overflow-y-scroll hover:overflow-x-hidden"
+  >
+    <div class="flex flex-col font-semibold text-sm">
+      <a
+        *ngFor="let item of category"
+        class="flex flex-row items-center gap-3 p-5 cursor-pointer hover:bg-gray-200"
+        href="{{ item.href }}"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        {{ item.content }}
+      </a>
+    </div>
+  </div>
+
+  <div class="p-5 border-t-2">
+    <p>© 2023 <span class="text-red-600 font-bold">Timesheet</span>.</p>
+    <p><span class="font-bold">Version</span> 4.3.0.0 [20221606]</p>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div
+  class="w-[40vw] gap-3 flex flex-col justify-center items-center overflow-hidden h-[40vh]"
+>
+  <mat-icon class="mat-icon text-yellow-300">error</mat-icon>
+  <h1 class="font-bold text-lg" mat-dialog-title>Are you sure</h1>
+  <h6 class="capitalize">
+    {{ data.action + " project:" }}
+    <strong>{{ data.projectName }}</strong>
+  </h6>
+  <div mat-dialog-actions>
+    <mat-dialog-actions align="end">
+      <button
+        class="text-black font-bold bg-gray-200"
+        mat-button
+        mat-dialog-close
+        mat-stroked-button
+      >
+        Cancel
+      </button>
+      <button
+        class="bg-blue-500 text-white font-semibold"
+        mat-raised-button
+        type="submit"
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+      >
+        Yes
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>

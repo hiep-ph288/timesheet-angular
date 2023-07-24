@@ -1,0 +1,10 @@
+<div class="bg-[#e9e9e9] w-screen relative">
+  <app-header class="w-screen fixed top-0 left-0 z-10"></app-header>
+  <app-side-bar class="fixed top-[70px] left-0  z-10"></app-side-bar>
+  <div class="w-screen relative flex flex-row mt-[70px] z-0 ">
+    <div class="w-[370px] h-full"></div>
+    <div class="w-full overflow-y-scroll m-[30px]">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

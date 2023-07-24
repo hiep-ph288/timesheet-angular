@@ -1,0 +1,51 @@
+<div class="w-full bg-white relative">
+  <div
+    class="h-[50px] flex flex-row items-center border-b justify-between px-[15px]"
+  >
+    <h1 class="text-20 font-semibold">Manage Projects</h1>
+    <button class="text-20" mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu class="absolute top-0 left-0" #menu="matMenu">
+      <button mat-menu-item (click)="refreshData()">Refresh</button>
+    </mat-menu>
+  </div>
+  <div class="m-5">
+    <div class="flex h-[70px] flex-row justify-between items-center">
+      <app-button
+        (click)="openDialog()"
+        routerLink="create"
+        class="w-40 h-[50px]"
+        [title]="'New Project'"
+      ></app-button>
+
+      <div class="flex flex-row items-center gap-10">
+        <mat-form-field class="w-[15vw]" appearance="outline">
+          <mat-label>All Projects</mat-label>
+          <mat-select [(value)]="selected" (valueChange)="selectedChange()">
+            <mat-option *ngFor="let option of options" [value]="option.value"
+              >{{ option.label }} ({{ option.count }})</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-[35vw]" appearance="outline">
+          <mat-label> Search by client or project name</mat-label>
+          <mat-icon matPrefix> search </mat-icon>
+          <input
+            [formControl]="searchInputForm"
+            (keyup.enter)="onSearch()"
+            matInput
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="mt-[24px]">
+      <app-project-list
+        (isActionChange)="selectedChange()"
+        [projectsData]="projectData"
+        [searchInput]="searchInput"
+        [isLoading]="(isLoading$ | async) ?? false"
+      ></app-project-list>
+    </div>
+  </div>
+</div>

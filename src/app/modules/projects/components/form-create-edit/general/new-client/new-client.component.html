@@ -1,0 +1,30 @@
+<form class="w-full" [formGroup]="createNewClient" (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title>New Client</h1>
+  <div mat-dialog-content>
+    <mat-form-field class="w-full">
+      <mat-label>name</mat-label>
+      <input formControlName="name" matInput />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>code</mat-label>
+      <input formControlName="code" matInput />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>address</mat-label>
+      <input formControlName="address" matInput />
+    </mat-form-field>
+  </div>
+  <div class="w-full flex flex-row justify-end gap-2" mat-dialog-actions>
+    <div class="flex-grow"></div>
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button
+      mat-raised-button
+      type="submit"
+      mat-button
+      cdkFocusInitial
+      color="warn"
+    >
+      Ok
+    </button>
+  </div>
+</form>

@@ -1,0 +1,173 @@
+<div class="w-full flex flex-row">
+  <div class="w-3/5">
+    <mat-accordion>
+      <mat-expansion-panel
+        expanded="true"
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title class="font-bold"> Team </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="flex flex-row justify-between items-center">
+          <mat-checkbox class="font-bold">Show deactive member</mat-checkbox>
+          <mat-form-field class="w-[70%]">
+            <mat-label> Search by name, email</mat-label>
+            <mat-icon matPrefix> search </mat-icon>
+            <input matInput />
+          </mat-form-field>
+        </div>
+        <ng-container *ngIf="activeUsers">
+          <div class="h-[30vh] overflow-y-scroll overflow-x-hidden">
+            <div
+              class="flex items-center gap-1 hover:bg-gray-100 cursor-pointer p-3"
+              *ngFor="
+                let user of activeUsers | searching : searchInputTeam;
+                let i = index
+              "
+              [ngClass]="i % 2 === 1 ? 'bg-gray-100' : ''"
+            >
+              <mat-icon (click)="selectedUserActive(user.id, 'notSelected')"
+                >close</mat-icon
+              >
+              <p>Member</p>
+              <div>
+                <p class="text-14">
+                  <strong>{{ user.name }}</strong>
+                  <span
+                    class="ml-2 px-1 w-fit bg-red-500 text-white rounded-full"
+                    >{{ user.type | listType }}</span
+                  >
+                  <span class="px-1 w-fit bg-red-500 text-white rounded-full">{{
+                    user.level | typeLevel
+                  }}</span>
+                </p>
+                <div>{{ user.emailAddress }}</div>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-select
+                    [(value)]="user.userPosition"
+                    (valueChange)="selectedChange($event, user.id)"
+                  >
+                    <mat-option
+                      [value]="selected"
+                      *ngFor="let selected of selectedTeamType"
+                    >
+                      {{ teamTypeNames[selected] }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <mat-icon (click)="selectedUserActive(user.id, 'notSelected')"
+                >keyboard_arrow_right</mat-icon
+              >
+            </div>
+          </div>
+        </ng-container>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="w-2/5">
+    <mat-accordion>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title class="font-bold">
+            Select team member
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="w-ful flex flex-row justify-between gap-5">
+          <!-- filterBranch -->
+          <mat-form-field class="w-[25%]">
+            <mat-select
+              [(ngModel)]="selectedBranch"
+              (ngModelChange)="onSelectedUser($event)"
+            >
+              <mat-option
+                *ngFor="let branch of branchFilter"
+                [value]="branch?.id"
+                >{{ branch.displayName }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <!-- filterType -->
+          <mat-form-field class="w-[25%]">
+            <mat-select
+              (ngModelChange)="onSelectedType($event)"
+              [(ngModel)]="selectedType"
+            >
+              <mat-option
+                *ngFor="let type of filterTypes"
+                [value]="type.type"
+                >{{ type.value }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-[50%]">
+            <mat-label> Search by name, email</mat-label>
+            <mat-icon matPrefix> search </mat-icon>
+            <input matInput [(ngModel)]="searchInput" />
+          </mat-form-field>
+        </div>
+        <div
+          class="h-[30vh] overflow-y-scroll overflow-x-hidden"
+          class="flex items-center gap-3 hover:bg-gray-100 cursor-pointer p-3 flex-nowrap"
+          *ngFor="
+            let user of filteredUsers | searching : searchInput;
+            let i = index
+          "
+          [ngClass]="i % 2 === 0 ? 'bg-gray-50' : ''"
+        >
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          <p>Member</p>
+          <div>
+            <div class="flex-col">
+              <div class="flex flex-nowrap">
+                <p class="font-bold text-14 mr-2">{{ user.name }}</p>
+                <span
+                  *ngIf="user.branchId !== null"
+                  class="text-13 h-fit w-fit px-1 bg-blue-500 text-white rounded-full"
+                  >{{ user.branchId | branch }}</span
+                >
+                <span
+                  class="text-[12px] font-semibold h-fit px-1 w-fit bg-red-500 text-white rounded-full"
+                  [ngClass]="{
+                    'bg-red-500': user.type === 0,
+                    'bg-green-500': user.type === 1,
+                    'bg-blue-500': user.type === 2,
+                  }"
+                  >{{ user.type | listType }}</span
+                >
+                <span
+                  class="text-[12px] h-fit font-semibold w-fit px-1 text-white rounded-full"
+                  [ngClass]="{
+                    'bg-gray-200': user.level === 1,
+                    'bg-gray-300': user.level === 2,
+                    'bg-gray-400': user.level === 3,
+                    'bg-blue-200': user.level === 4,
+                    'bg-blue-300': user.level === 5,
+                    'bg-blue-400': user.level === 6,
+                    'bg-amber-200': user.level === 7,
+                    'bg-amber-300': user.level === 8,
+                    'bg-amber-400': user.level === 9,
+                    'bg-green-200': user.level === 10,
+                    'bg-green-300': user.level === 11,
+                    'bg-green-400': user.level === 12,
+                    'bg-red-200': user.level === 13,
+                    'bg-red-300': user.level === 14,
+                    'bg-red-400': user.level === 15,
+                  }"
+                  >{{ user.level | typeLevel }}</span
+                >
+              </div>
+              <p>{{ user.emailAddress }}</p>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

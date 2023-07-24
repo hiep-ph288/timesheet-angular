@@ -1,0 +1,30 @@
+<div class="w-full bg-white relative px-[15px]">
+  <div class="flex flex-row items-center border-b justify-between py-[20px]">
+    <h1 class="text-[30px] font-semibold">Create Project</h1>
+    <button class="text-20" type="button" mat-button (click)="backHomePage()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+  <div class="w-full mt-5 border-b">
+    <nav class="w-[40vw]" mat-tab-nav-bar [tabPanel]="tabPanel">
+      <a
+        *ngFor="let link of links"
+        (click)="activeLinkTab = link"
+        [active]="activeLinkTab === link"
+        mat-tab-link
+        [routerLink]="link"
+      >
+        {{ link }}
+      </a>
+    </nav>
+  </div>
+  <mat-tab-nav-panel #tabPanel>
+      <router-outlet></router-outlet>
+  </mat-tab-nav-panel>
+  <div class="bg-white w-full flex justify-end p-5">
+    <button type="button" mat-flat-button (click)="backHomePage()">
+      Cancel
+    </button>
+    <button mat-flat-button type="button" color="warn">Save</button>
+  </div>
+</div>

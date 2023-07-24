@@ -1,0 +1,43 @@
+<div class="flex">
+    <table class="w-full">
+      <colgroup>
+        <col class="w-1/2" />
+        <col class="w-1/2" />
+      </colgroup>
+      <tr class="font-bold text-left">
+        <th>Tasks</th>
+        <th>
+          <h5>Billable</h5>
+          <mat-checkbox
+            [checked]="checkAllCheckBox()"
+            (change)="setAllCheckBox()"
+            color="warn"
+            class="example-margin"
+          ></mat-checkbox>
+        </th>
+      </tr>
+      <tr
+        *ngFor="let task of billableUsers; let i = index"
+        [ngClass]="i % 2 === 1 ? 'bg-gray-100' : ''"
+      >
+        <td class="flex hover:bg-gray-100 p-3">
+          <mat-icon
+            class="cursor-pointer"
+            (click)="onSelected(task.id, 'deleteUser')"
+          >
+            close
+          </mat-icon>
+          <p class="text-md">{{ task?.name }}</p>
+        </td>
+        <td>
+          <mat-checkbox
+            [checked]="task.billable"
+            (change)="isCompleted(task.id, $event.checked)"
+            color="warn"
+            class="example-margin"
+          ></mat-checkbox>
+        </td>
+      </tr>
+    </table>
+    <td></td>
+  </div>
